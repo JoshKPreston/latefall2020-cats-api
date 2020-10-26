@@ -11,6 +11,7 @@ export class CatController extends BaseController {
             .get('', this.getAll)
             .delete('/:catId', this.delete)
             .post('', this.create)
+            .put('/:catId', this.edit)  
     }
 
     getAll(req, res, next) {
@@ -37,6 +38,17 @@ export class CatController extends BaseController {
             let id = req.params.catId
             catService.delete(id)
             res.send({ message: "Delorted cat!" })
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    edit(req, res, next) {
+        try {
+            let id = req.params.catId
+            let modifiedData = req.body
+            catService.edit(id, modifiedData)
+            res.send({ data: modifiedData, message: "Edited cat!" })
         } catch (error) {
             next(error)
         }
