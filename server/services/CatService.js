@@ -3,6 +3,9 @@ import { BadRequest } from "../utils/Errors";
 
 class CatService {
     edit(id, modifiedData) {
+        if (!modifiedData.hasOwnProperty("name") || !modifiedData.hasOwnProperty("color")) {
+            throw new BadRequest("Cat needs a name and or color yo. This is a raw cat")
+        }
         let index = FAKEDB.cats.findIndex(c => c.id == id)
         if (index < 0) {
             throw new BadRequest("No cat by that id")
